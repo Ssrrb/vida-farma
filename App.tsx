@@ -5,7 +5,7 @@
 */
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ProductGrid from './components/ProductGrid';
@@ -19,11 +19,59 @@ import CartDrawer from './components/CartDrawer';
 import Checkout from './components/Checkout';
 import Store from './components/Store';
 import { Product, JournalArticle, ViewState } from './types';
+import { PRODUCTS } from './constants';
+import { fetchProducts } from './services/productApi';
+import { fetchCategories } from './services/categoryApi';
 
 function App() {
   const [view, setView] = useState<ViewState>({ type: 'home' });
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    let isActive = true;
+
+    const deriveCategoriesFromProducts = (items: Product[]) => {
+      const seen = new Set<string>();
+      const result: string[] = [];
+      items.forEach((item) => {
+        if (!seen.has(item.category)) {
+          seen.add(item.category);
+          result.push(item.category);
+        }
+      });
+      return result;
+    };
+
+    const loadData = async () => {
+      const [productsResult, categoriesResult] = await Promise.allSettled([
+        fetchProducts(),
+        fetchCategories()
+      ]);
+
+      if (!isActive) {
+        return;
+      }
+
+      const productData =
+        productsResult.status === 'fulfilled' ? productsResult.value : PRODUCTS;
+      setProducts(productData);
+
+      if (categoriesResult.status === 'fulfilled' && categoriesResult.value.length > 0) {
+        setCategories(categoriesResult.value);
+      } else {
+        setCategories(deriveCategoriesFromProducts(productData));
+      }
+    };
+
+    loadData();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   // Handle navigation (clicks on Navbar or Footer links)
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -95,6 +143,7 @@ function App() {
             onCategorySelect={handleCategorySelect}
             cartCount={cartItems.length}
             onOpenCart={() => setIsCartOpen(true)}
+            categories={categories}
         />
       )}
       
@@ -105,7 +154,7 @@ function App() {
             <ProductGrid onProductClick={(p) => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 setView({ type: 'product', product: p });
-            }} />
+            }} products={products} />
             <About />
             <Journal onArticleClick={(a) => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -122,6 +171,8 @@ function App() {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     setView({ type: 'product', product: p });
                 }}
+                products={products}
+                categories={['Todo', ...categories.filter((category) => category !== 'Todo')]}
             />
         )}
 

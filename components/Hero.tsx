@@ -6,7 +6,6 @@
 
 
 import React from 'react';
-import { PRODUCTS } from '../constants';
 
 const Hero: React.FC = () => {
   const handleNavClick = (e: React.MouseEvent<HTMLElement>, targetId: string) => {
@@ -106,7 +105,7 @@ const Hero: React.FC = () => {
              {/* Card 2 */}
              <div className="bg-white rounded-xl p-6 flex flex-col justify-between h-48 hover:shadow-md transition-shadow cursor-pointer">
                 <div>
-                    <span className="text-xs font-bold uppercase text-[#5D5A53] mb-2 block">Botiquín Familiar</span>
+                    <span className="text-xs font-bold uppercase text-[#5D5A53] mb-2 block">Martes y Jueves</span>
                     <h4 className="text-3xl font-serif text-[#2C2A26]">15-25% OFF</h4>
                     <p className="text-sm text-[#5D5A53]">Medicamentos seleccionados</p>
                 </div>
@@ -116,9 +115,9 @@ const Hero: React.FC = () => {
              {/* Card 3 */}
              <div className="bg-white rounded-xl p-6 flex flex-col justify-between h-48 hover:shadow-md transition-shadow cursor-pointer">
                 <div>
-                    <span className="text-xs font-bold uppercase text-[#5D5A53] mb-2 block">Snacks y Bebidas</span>
-                    <h4 className="text-3xl font-serif text-[#2C2A26]"><span className="text-lg align-top">Gs.</span> 15.000</h4>
-                    <p className="text-sm text-[#5D5A53]">Precios desde</p>
+                    <span className="text-xs font-bold uppercase text-[#5D5A53] mb-2 block">Reintegros</span>
+                    <h4 className="text-3xl font-serif text-[#2C2A26]"><span className="text-lg align-top"></span> Hasta 40%</h4>
+                    <p className="text-sm text-[#5D5A53]">En medicamentos seleccionados</p>
                 </div>
                 <div className="self-end text-[#2C2A26] opacity-20">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10">

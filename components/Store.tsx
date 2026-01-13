@@ -5,7 +5,6 @@
 */
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { PRODUCTS } from '../constants';
 import { Product } from '../types';
 import ProductCard from './ProductCard';
 
@@ -13,20 +12,11 @@ interface StoreProps {
   initialCategory?: string;
   initialSearch?: string;
   onProductClick: (product: Product) => void;
+  products: Product[];
+  categories: string[];
 }
 
-const CATEGORIES = [
-  'Todo',
-  'Medicamentos',
-  'Perfumes',
-  'Higiene',
-  'Salud',
-  'Dermocosmetica',
-  'Bebé y Mamá',
-  'Nutrición y Deporte'
-];
-
-const Store: React.FC<StoreProps> = ({ initialCategory, initialSearch, onProductClick }) => {
+const Store: React.FC<StoreProps> = ({ initialCategory, initialSearch, onProductClick, products, categories }) => {
   const [activeCategory, setActiveCategory] = useState(initialCategory || 'Todo');
   const [searchQuery, setSearchQuery] = useState(initialSearch || '');
 
@@ -40,13 +30,13 @@ const Store: React.FC<StoreProps> = ({ initialCategory, initialSearch, onProduct
   }, [initialSearch]);
 
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter(p => {
+    return products.filter(p => {
       const matchesCategory = activeCategory === 'Todo' || p.category === activeCategory;
       const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                             p.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, products]);
 
   return (
     <div className="min-h-screen bg-[#F5F2EB] pt-32 pb-24 px-6 md:px-12 animate-fade-in-up">
@@ -65,7 +55,7 @@ const Store: React.FC<StoreProps> = ({ initialCategory, initialSearch, onProduct
             
             {/* Filter Pills */}
             <div className="flex flex-wrap gap-2 md:justify-end max-w-2xl">
-                {CATEGORIES.map(cat => (
+                {categories.map(cat => (
                     <button
                         key={cat}
                         onClick={() => {

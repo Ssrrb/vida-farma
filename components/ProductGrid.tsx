@@ -6,7 +6,6 @@
 
 
 import React, { useState, useMemo } from 'react';
-import { PRODUCTS } from '../constants';
 import { Product } from '../types';
 import ProductCard from './ProductCard';
 
@@ -14,15 +13,16 @@ const categories = ['Todo', 'Perfumería', 'Cosmética', 'Farmacia', 'Cuidado Pe
 
 interface ProductGridProps {
   onProductClick: (product: Product) => void;
+  products: Product[];
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ onProductClick }) => {
+const ProductGrid: React.FC<ProductGridProps> = ({ onProductClick, products }) => {
   const [activeCategory, setActiveCategory] = useState('Todo');
 
   const filteredProducts = useMemo(() => {
-    if (activeCategory === 'Todo') return PRODUCTS;
-    return PRODUCTS.filter(p => p.category === activeCategory);
-  }, [activeCategory]);
+    if (activeCategory === 'Todo') return products;
+    return products.filter(p => p.category === activeCategory);
+  }, [activeCategory, products]);
 
   return (
     <section id="products" className="py-32 px-6 md:px-12 bg-[#F5F2EB]">

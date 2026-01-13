@@ -14,19 +14,10 @@ interface NavbarProps {
   onCategorySelect: (category: string) => void;
   cartCount: number;
   onOpenCart: () => void;
+  categories: string[];
 }
 
-const CATEGORIES = [
-  'Medicamentos',
-  'Perfumes',
-  'Higiene',
-  'Salud',
-  'Dermocosmetica',
-  'Bebé y Mamá',
-  'Nutrición y Deporte'
-];
-
-const Navbar: React.FC<NavbarProps> = ({ onNavClick, onSearch, onCategorySelect, cartCount, onOpenCart }) => {
+const Navbar: React.FC<NavbarProps> = ({ onNavClick, onSearch, onCategorySelect, cartCount, onOpenCart, categories }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
@@ -111,7 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, onSearch, onCategorySelect,
                     }`}
                 >
                     <div className="py-2">
-                        {CATEGORIES.map(cat => (
+                        {categories.map(cat => (
                             <button
                                 key={cat}
                                 onClick={() => handleCategoryClick(cat)}
@@ -200,7 +191,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, onSearch, onCategorySelect,
             <div className="border-b border-[#D6D1C7] pb-4">
                 <p className="text-sm font-sans font-bold uppercase tracking-widest text-[#A8A29E] mb-4">Categorías</p>
                 <div className="flex flex-col gap-3 pl-2">
-                    {CATEGORIES.map(cat => (
+                    {categories.map(cat => (
                          <button key={cat} onClick={() => handleCategoryClick(cat)} className="text-left hover:text-[#5D5A53] transition-colors">{cat}</button>
                     ))}
                 </div>
