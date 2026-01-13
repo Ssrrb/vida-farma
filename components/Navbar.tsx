@@ -6,7 +6,6 @@
 
 
 import React, { useState, useEffect, useRef } from 'react';
-import { BRAND_NAME } from '../constants';
 
 interface NavbarProps {
   onNavClick: (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => void;
@@ -71,7 +70,12 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, onSearch, onCategorySelect,
             }}
             className={`text-2xl md:text-3xl font-serif font-medium tracking-tight z-50 whitespace-nowrap transition-colors duration-500 ${textClass}`}
           >
-            {BRAND_NAME}
+            <img
+              src="/images/logo-vida-farma.svg"
+              alt="Vida Farma"
+              className="h-14 md:h-20 lg:h-24 w-auto -my-2"
+              style={{ filter: isSolid ? 'none' : 'invert(1)' }}
+            />
           </a>
           
           {/* Desktop Search & Nav */}

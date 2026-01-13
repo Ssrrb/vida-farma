@@ -1,4 +1,6 @@
-export const fetchCategories = async (): Promise<string[]> => {
+import { CategoryGroup } from '../types';
+
+export const fetchCategories = async (): Promise<CategoryGroup[]> => {
   const response = await fetch('/api/categories');
 
   if (!response.ok) {

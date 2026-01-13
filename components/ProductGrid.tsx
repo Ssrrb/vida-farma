@@ -9,14 +9,13 @@ import React, { useState, useMemo } from 'react';
 import { Product } from '../types';
 import ProductCard from './ProductCard';
 
-const categories = ['Todo', 'Perfumería', 'Cosmética', 'Farmacia', 'Cuidado Personal'];
-
 interface ProductGridProps {
   onProductClick: (product: Product) => void;
   products: Product[];
+  categories: string[];
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ onProductClick, products }) => {
+const ProductGrid: React.FC<ProductGridProps> = ({ onProductClick, products, categories }) => {
   const [activeCategory, setActiveCategory] = useState('Todo');
 
   const filteredProducts = useMemo(() => {

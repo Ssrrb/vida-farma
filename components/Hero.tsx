@@ -5,145 +5,233 @@
 */
 
 
-import React from 'react';
+import React, { useState } from 'react';
+import DiscountModal, { Discount } from './DiscountModal';
+
+const DISCOUNTS: Discount[] = [
+    {
+        id: 'summer-sale',
+        title: '20% OFF',
+        subtitle: 'Oferta de Verano',
+        description: 'Aprovecha un 20% de descuento en toda nuestra línea de dermocosmética y productos de bienestar seleccionados. Cuida tu piel este verano con la mejor calidad.',
+        code: 'VIDA20',
+        category: 'Ventas de Verano',
+        colorScheme: 'dark',
+        ctaText: 'Comprar Colección',
+        imageUrl: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=1200'
+    },
+    {
+        id: 'new-year',
+        title: 'Ahorros de Año Nuevo',
+        subtitle: 'Año nuevo, ahorros nuevos.',
+        description: 'Comienza el año priorizando tu salud. Desbloquea cupones exclusivos para suplementos y vitaminas que te ayudarán a cumplir tus metas de bienestar.',
+        code: 'NEW2025',
+        category: 'Especial',
+        colorScheme: 'light',
+        ctaText: 'Ver Cupones',
+    },
+    {
+        id: 'vitamins-bogo',
+        title: '2x1 Vitaminas',
+        subtitle: 'GRATIS',
+        description: 'En el mes de la energía, llévate dos unidades al precio de una en marcas seleccionadas de complejos vitamínicos y minerales.',
+        category: 'Vitaminas',
+        colorScheme: 'light',
+        ctaText: 'Aprovechar 2x1',
+        imageUrl: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=300'
+    },
+    {
+        id: 'skincare-50',
+        title: '50% OFF',
+        subtitle: 'Cuidado de la Piel',
+        description: '50% de descuento en la segunda unidad de la misma marca en productos de limpieza facial y serums.',
+        category: 'Cuidado de la Piel',
+        colorScheme: 'light',
+        ctaText: 'Ver Productos'
+    },
+    {
+        id: 'meds-days',
+        title: '15-25% OFF',
+        subtitle: 'Martes y Jueves',
+        description: 'Días especiales de ahorro en medicamentos de venta libre y recetas seleccionadas todos los martes y jueves.',
+        category: 'Medicamentos',
+        colorScheme: 'light',
+        ctaText: 'Ver Calendario'
+    },
+    {
+        id: 'reintegros',
+        title: 'Hasta 40%',
+        subtitle: 'Reintegros',
+        description: 'Obtén reintegros directos al comprar medicamentos para enfermedades crónicas a través de convenios con obras sociales.',
+        category: 'Salud',
+        colorScheme: 'light',
+        ctaText: 'Ver Convenios'
+    },
+    {
+        id: 'supplements-50',
+        title: '50% OFF',
+        subtitle: 'Suplementos',
+        description: '50% de descuento en la segunda unidad de suplementos deportivos y proteínas seleccionadas.',
+        category: 'Suplementos',
+        colorScheme: 'light',
+        ctaText: 'Comprar Ahora'
+    }
+];
 
 const Hero: React.FC = () => {
-  const handleNavClick = (e: React.MouseEvent<HTMLElement>, targetId: string) => {
-    e.preventDefault();
-    const element = document.getElementById(targetId);
-    if (element) {
-      const headerOffset = 85;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+    const [selectedDiscount, setSelectedDiscount] = useState<Discount | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-      
-      try {
-        window.history.pushState(null, '', `#${targetId}`);
-      } catch (err) {
-        // Ignore SecurityError
-      }
-    }
-  };
+    const handleOpenModal = (discount: Discount) => {
+        setSelectedDiscount(discount);
+        setIsModalOpen(true);
+    };
 
-  return (
-    <section className="relative w-full min-h-screen bg-[#4A6C7C] pt-28 pb-16 px-4 md:px-8 font-sans">
-      <div className="max-w-[1600px] mx-auto space-y-6">
-        {/* Main Hero Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]">
-            
-            {/* Large Orange Banner */}
-            <div className="lg:col-span-2 bg-[#F97316] rounded-xl p-8 md:p-12 relative overflow-hidden text-white flex flex-col justify-center min-h-[400px]">
-                <div className="relative z-10 max-w-lg">
-                    <span className="block text-sm font-medium uppercase tracking-widest mb-2 border-b border-white/30 w-fit pb-1">Oferta de Verano</span>
-                    <h2 className="text-5xl md:text-7xl font-serif mb-4 leading-none">20% OFF</h2>
-                    <p className="text-lg md:text-xl font-light mb-8 opacity-90">
-                        En productos de dermocosmética y bienestar seleccionados con el código <span className="font-bold border-b-2 border-white">VIDA20</span>
-                    </p>
-                    <a href="#products" onClick={(e) => handleNavClick(e, 'products')} className="inline-block bg-white text-[#F97316] px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-[#F5F2EB] transition-colors">
-                        Comprar Ahora
-                    </a>
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleAction = (discount: Discount) => {
+        console.log('Action for:', discount.id);
+        setIsModalOpen(false);
+        // Smooth scroll to products as a default action
+        const element = document.getElementById('products');
+        if (element) {
+            const headerOffset = 85;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.scrollY - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+    };
+
+    const mainBanner = DISCOUNTS[0];
+    const sideCards = DISCOUNTS.slice(1, 3);
+    const bottomCards = DISCOUNTS.slice(3);
+
+    return (
+        <section className="relative w-full min-h-screen bg-[#F5F2EB] pt-28 pb-16 px-4 md:px-8 font-sans">
+            <div className="max-w-[1600px] mx-auto space-y-6">
+                {/* Main Hero Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-[minmax(400px,auto)]">
+
+                    {/* Large Main Banner */}
+                    <div
+                        className="lg:col-span-2 bg-[#2C2A26] rounded-2xl p-8 md:p-14 relative overflow-hidden text-[#F5F2EB] flex flex-col justify-center min-h-[450px] cursor-pointer group shadow-xl transition-all duration-500 hover:shadow-2xl"
+                        onClick={() => handleOpenModal(mainBanner)}
+                    >
+                        {/* Background Image with Overlay */}
+                        <div className="absolute inset-0 z-0">
+                            <img
+                                src={mainBanner.imageUrl}
+                                alt="Summer Sale"
+                                className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-1000"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#2C2A26] via-[#2C2A26]/80 to-transparent" />
+                        </div>
+
+                        <div className="relative z-10 max-w-xl">
+                            <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] mb-6 border-b border-[#D6D1C7]/30 pb-2">
+                                {mainBanner.subtitle}
+                            </span>
+                            <h2 className="text-6xl md:text-8xl font-serif mb-6 leading-none tracking-tight">
+                                {mainBanner.title}
+                            </h2>
+                            <p className="text-lg md:text-xl font-light mb-10 text-[#A8A29E] leading-relaxed">
+                                En productos de dermocosmética y bienestar seleccionados con el código <span className="text-[#F5F2EB] font-medium border-b border-[#F5F2EB]">{mainBanner.code}</span>
+                            </p>
+                            <button
+                                className="inline-block bg-[#F5F2EB] text-[#2C2A26] px-10 py-4 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenModal(mainBanner);
+                                }}
+                            >
+                                {mainBanner.ctaText}
+                            </button>
+                        </div>
+                        {/* Decorative background typography */}
+                        <div className="absolute right-0 bottom-0 text-[15rem] md:text-[20rem] font-bold text-white/5 leading-none pointer-events-none select-none -mb-20 -mr-10 font-serif">
+                            2025
+                        </div>
+                    </div>
+
+                    {/* Right Column Stacked Cards */}
+                    <div className="flex flex-col gap-6">
+                        {sideCards.map((discount) => (
+                            <div
+                                key={discount.id}
+                                className="bg-white rounded-2xl p-8 flex-1 flex flex-col justify-center items-start relative overflow-hidden group hover:shadow-xl transition-all duration-500 cursor-pointer border border-[#EBE7DE]"
+                                onClick={() => handleOpenModal(discount)}
+                            >
+                                <div className="relative z-10 w-full flex justify-between items-start">
+                                    <div className="max-w-[60%]">
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#A8A29E] mb-2 block">{discount.category}</span>
+                                        <h3 className="text-3xl font-serif text-[#2C2A26] mb-2 leading-tight">{discount.subtitle}</h3>
+                                        {discount.title !== discount.subtitle && (
+                                            <p className="text-4xl font-serif text-[#2C2A26] opacity-40">{discount.title}</p>
+                                        )}
+                                    </div>
+
+                                    {discount.imageUrl && (
+                                        <div className="w-24 h-24 relative rounded-full overflow-hidden bg-[#F5F2EB] border border-[#EBE7DE]">
+                                            <img
+                                                src={discount.imageUrl}
+                                                alt={discount.category}
+                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="mt-6 z-10 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#2C2A26] group-hover:gap-4 transition-all">
+                                    <span>{discount.ctaText}</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                                    </svg>
+                                </div>
+
+                                {/* Background detail */}
+                                <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-[#EBE7DE] rounded-full opacity-20 group-hover:scale-150 transition-transform duration-1000"></div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                {/* Background Typography Graphic */}
-                <div className="absolute right-0 bottom-0 text-[12rem] md:text-[18rem] font-bold text-white/10 leading-none pointer-events-none select-none -mb-16 -mr-8 font-serif">
-                    2025
+
+                {/* Bottom Row: Additional Offers */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {bottomCards.map((discount) => (
+                        <div
+                            key={discount.id}
+                            className="bg-white rounded-2xl p-8 flex flex-col justify-between min-h-[220px] hover:shadow-xl transition-all duration-500 cursor-pointer border border-[#EBE7DE] group"
+                            onClick={() => handleOpenModal(discount)}
+                        >
+                            <div>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-[#A8A29E] mb-3 block">{discount.category}</span>
+                                <h4 className="text-3xl font-serif text-[#2C2A26] leading-tight mb-2">{discount.title}</h4>
+                                <p className="text-sm text-[#5D5A53] opacity-0 group-hover:opacity-100 transition-opacity duration-300">{discount.subtitle}</p>
+                            </div>
+                            <div className="flex justify-between items-center mt-4">
+                                <div className="w-8 h-8 rounded-full bg-[#F5F2EB] flex items-center justify-center text-[#2C2A26] group-hover:bg-[#2C2A26] group-hover:text-[#F5F2EB] transition-colors duration-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                </div>
+                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8A29E]">Detalles</span>
+                            </div>
+                        </div>
+                    ))}
                 </div>
+
             </div>
 
-            {/* Right Column Stacked Cards */}
-            <div className="flex flex-col gap-6">
-                
-                {/* Promo Card 1: New Year */}
-                <div className="bg-white rounded-xl p-8 flex-1 flex flex-col justify-center items-start relative overflow-hidden group hover:shadow-lg transition-all">
-                    <h3 className="text-3xl font-serif text-[#2C2A26] mb-2 z-10">Año nuevo,<br/>ahorros nuevos.</h3>
-                    <p className="text-[#5D5A53] mb-4 z-10">Desbloquea tus cupones exclusivos.</p>
-                    <div className="absolute -right-4 -bottom-4 w-32 h-32 bg-[#FFD700] rounded-full opacity-20 group-hover:scale-150 transition-transform duration-700"></div>
-                    <div className="z-10 bg-[#EBE7DE] p-3 rounded-full text-[#2C2A26]">
-                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H4.5a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12" />
-                        </svg>
-                    </div>
-                </div>
-
-                {/* Promo Card 2: BOGO */}
-                <div className="bg-white rounded-xl p-8 flex-1 flex flex-row items-center justify-between relative overflow-hidden group hover:shadow-lg transition-all">
-                    <div className="z-10">
-                        <span className="text-xs font-bold uppercase tracking-widest text-[#F97316] mb-1 block">Vitaminas</span>
-                        <h3 className="text-4xl font-serif text-[#2C2A26] mb-1">2x1</h3>
-                        <p className="text-lg font-bold text-[#2C2A26] mb-1">GRATIS</p>
-                        <p className="text-sm text-[#5D5A53]">en marcas seleccionadas</p>
-                    </div>
-                    <div className="w-24 h-24 md:w-32 md:h-32 relative z-10">
-                         <img 
-                            src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=300" 
-                            alt="Vitamins" 
-                            className="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500"
-                        />
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        {/* Bottom Row: Additional Offers */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-             {/* Card 1 */}
-             <div className="bg-white rounded-xl p-6 flex flex-col justify-between h-48 hover:shadow-md transition-shadow cursor-pointer">
-                <div>
-                    <span className="text-xs font-bold uppercase text-[#5D5A53] mb-2 block">Cuidado de la Piel</span>
-                    <h4 className="text-3xl font-serif text-[#2C2A26]">50% OFF</h4>
-                    <p className="text-sm text-[#5D5A53]">2da unidad misma marca</p>
-                </div>
-                <div className="self-end">
-                    <span className="text-[#F97316] text-xl">✦</span>
-                </div>
-             </div>
-
-             {/* Card 2 */}
-             <div className="bg-white rounded-xl p-6 flex flex-col justify-between h-48 hover:shadow-md transition-shadow cursor-pointer">
-                <div>
-                    <span className="text-xs font-bold uppercase text-[#5D5A53] mb-2 block">Martes y Jueves</span>
-                    <h4 className="text-3xl font-serif text-[#2C2A26]">15-25% OFF</h4>
-                    <p className="text-sm text-[#5D5A53]">Medicamentos seleccionados</p>
-                </div>
-                <div className="w-12 h-12 bg-blue-100 rounded-full self-end opacity-50"></div>
-             </div>
-
-             {/* Card 3 */}
-             <div className="bg-white rounded-xl p-6 flex flex-col justify-between h-48 hover:shadow-md transition-shadow cursor-pointer">
-                <div>
-                    <span className="text-xs font-bold uppercase text-[#5D5A53] mb-2 block">Reintegros</span>
-                    <h4 className="text-3xl font-serif text-[#2C2A26]"><span className="text-lg align-top"></span> Hasta 40%</h4>
-                    <p className="text-sm text-[#5D5A53]">En medicamentos seleccionados</p>
-                </div>
-                <div className="self-end text-[#2C2A26] opacity-20">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                    </svg>
-                </div>
-             </div>
-
-             {/* Card 4 */}
-             <div className="bg-white rounded-xl p-6 flex flex-col justify-between h-48 hover:shadow-md transition-shadow cursor-pointer">
-                <div>
-                    <span className="text-xs font-bold uppercase text-[#5D5A53] mb-2 block">Suplementos</span>
-                    <h4 className="text-3xl font-serif text-[#2C2A26]">50% OFF</h4>
-                    <p className="text-sm text-[#5D5A53]">En la segunda unidad</p>
-                </div>
-                <div className="self-end text-[#F97316]">
-                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                    </svg>
-                </div>
-             </div>
-        </div>
-
-      </div>
-    </section>
-  );
+            <DiscountModal
+                discount={selectedDiscount}
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                onAction={handleAction}
+            />
+        </section>
+    );
 };
 
 export default Hero;

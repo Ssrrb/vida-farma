@@ -18,7 +18,7 @@ import JournalDetail from './components/JournalDetail';
 import CartDrawer from './components/CartDrawer';
 import Checkout from './components/Checkout';
 import Store from './components/Store';
-import { Product, JournalArticle, ViewState } from './types';
+import { Product, JournalArticle, ViewState, CategoryGroup } from './types';
 import { PRODUCTS } from './constants';
 import { fetchProducts } from './services/productApi';
 import { fetchCategories } from './services/categoryApi';
@@ -28,7 +28,7 @@ function App() {
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categoryGroups, setCategoryGroups] = useState<CategoryGroup[]>([]);
 
   useEffect(() => {
     let isActive = true;
@@ -43,6 +43,13 @@ function App() {
         }
       });
       return result;
+    };
+
+    const deriveCategoryGroupsFromProducts = (items: Product[]) => {
+      return deriveCategoriesFromProducts(items).map((category) => ({
+        name: category,
+        subcategories: []
+      }));
     };
 
     const loadData = async () => {
@@ -60,9 +67,9 @@ function App() {
       setProducts(productData);
 
       if (categoriesResult.status === 'fulfilled' && categoriesResult.value.length > 0) {
-        setCategories(categoriesResult.value);
+        setCategoryGroups(categoriesResult.value);
       } else {
-        setCategories(deriveCategoriesFromProducts(productData));
+        setCategoryGroups(deriveCategoryGroupsFromProducts(productData));
       }
     };
 
@@ -134,6 +141,9 @@ function App() {
     setCartItems(newItems);
   };
 
+  const categoryNames = categoryGroups.map((category) => category.name);
+  const categoryList = ['Todo', ...categoryNames.filter((category) => category !== 'Todo')];
+
   return (
     <div className="min-h-screen bg-[#F5F2EB] font-sans text-[#2C2A26] selection:bg-[#D6D1C7] selection:text-[#2C2A26]">
       {view.type !== 'checkout' && (
@@ -143,7 +153,7 @@ function App() {
             onCategorySelect={handleCategorySelect}
             cartCount={cartItems.length}
             onOpenCart={() => setIsCartOpen(true)}
-            categories={categories}
+            categories={categoryList}
         />
       )}
       
@@ -154,7 +164,7 @@ function App() {
             <ProductGrid onProductClick={(p) => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 setView({ type: 'product', product: p });
-            }} products={products} />
+            }} products={products} categories={categoryList} />
             <About />
             <Journal onArticleClick={(a) => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -172,7 +182,7 @@ function App() {
                     setView({ type: 'product', product: p });
                 }}
                 products={products}
-                categories={['Todo', ...categories.filter((category) => category !== 'Todo')]}
+                categories={categoryList}
             />
         )}
 

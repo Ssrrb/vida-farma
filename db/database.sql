@@ -19,6 +19,32 @@ INSERT INTO categories (name, sort_order) VALUES
 ON CONFLICT (name) DO UPDATE SET
   sort_order = EXCLUDED.sort_order;
 
+CREATE TABLE IF NOT EXISTS subcategories (
+  category_name TEXT NOT NULL REFERENCES categories(name) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (category_name, name)
+);
+
+INSERT INTO subcategories (category_name, name, sort_order) VALUES
+  ('Medicamentos', 'Analgésicos', 1),
+  ('Medicamentos', 'Antigripales', 2),
+  ('Medicamentos', 'Antibióticos', 3),
+  ('Perfumes', 'Femeninos', 1),
+  ('Perfumes', 'Masculinos', 2),
+  ('Higiene', 'Cuidado Oral', 1),
+  ('Higiene', 'Cuidado Capilar', 2),
+  ('Salud', 'Monitoreo', 1),
+  ('Salud', 'Primeros Auxilios', 2),
+  ('Dermocosmetica', 'Protector Solar', 1),
+  ('Dermocosmetica', 'Hidratación', 2),
+  ('Bebé y Mamá', 'Lactancia', 1),
+  ('Bebé y Mamá', 'Higiene del Bebé', 2),
+  ('Nutrición y Deporte', 'Vitaminas', 1),
+  ('Nutrición y Deporte', 'Proteínas', 2)
+ON CONFLICT (category_name, name) DO UPDATE SET
+  sort_order = EXCLUDED.sort_order;
+
 CREATE TABLE IF NOT EXISTS products (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,

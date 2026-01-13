@@ -15,6 +15,11 @@ export type Category =
   | 'Bebé y Mamá' 
   | 'Nutrición y Deporte';
 
+export interface CategoryGroup {
+  name: string;
+  subcategories: string[];
+}
+
 export interface Product {
   id: string;
   name: string;
