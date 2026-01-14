@@ -1,4 +1,3 @@
-
 /**
 
  * @license
@@ -61,14 +60,14 @@ const Assistant: React.FC = () => {
   return (
     <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end font-sans">
       {isOpen && (
-        <div className="bg-[#F5F2EB] rounded-none shadow-2xl shadow-[#2C2A26]/10 w-[90vw] sm:w-[380px] h-[550px] mb-6 flex flex-col overflow-hidden border border-[#D6D1C7] animate-slide-up-fade">
+        <div className="bg-background rounded-none shadow-2xl shadow-primary/10 w-[90vw] sm:w-[380px] h-[550px] mb-6 flex flex-col overflow-hidden border border-border animate-slide-up-fade">
           {/* Header */}
-          <div className="bg-[#EBE7DE] p-5 border-b border-[#D6D1C7] flex justify-between items-center">
+          <div className="bg-muted p-5 border-b border-border flex justify-between items-center">
             <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-[#2C2A26] rounded-full animate-pulse"></div>
-                <span className="font-serif italic text-[#2C2A26] text-lg">Asistente Virtual</span>
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                <span className="font-serif italic text-foreground text-lg">Asistente Virtual</span>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-[#A8A29E] hover:text-[#2C2A26] transition-colors">
+            <button onClick={() => setIsOpen(false)} className="text-muted-foreground hover:text-foreground transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -76,14 +75,14 @@ const Assistant: React.FC = () => {
           </div>
 
           {/* Chat Area */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-8 bg-[#F5F2EB]" ref={scrollRef}>
+          <div className="flex-1 overflow-y-auto p-6 space-y-8 bg-background" ref={scrollRef}>
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div 
                   className={`max-w-[85%] p-5 text-sm leading-relaxed ${
                     msg.role === 'user' 
-                      ? 'bg-[#2C2A26] text-[#F5F2EB]' 
-                      : 'bg-white border border-[#EBE7DE] text-[#5D5A53] shadow-sm'
+                      ? 'bg-primary text-primary-foreground' 
+                      : 'bg-card border border-border text-foreground shadow-sm'
                   }`}
                 >
                   {msg.text}
@@ -92,17 +91,17 @@ const Assistant: React.FC = () => {
             ))}
             {isThinking && (
                <div className="flex justify-start">
-                 <div className="bg-white border border-[#EBE7DE] p-5 flex gap-1 items-center shadow-sm">
-                   <div className="w-1.5 h-1.5 bg-[#A8A29E] rounded-full animate-bounce"></div>
-                   <div className="w-1.5 h-1.5 bg-[#A8A29E] rounded-full animate-bounce delay-75"></div>
-                   <div className="w-1.5 h-1.5 bg-[#A8A29E] rounded-full animate-bounce delay-150"></div>
+                 <div className="bg-card border border-border p-5 flex gap-1 items-center shadow-sm">
+                   <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-bounce"></div>
+                   <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-bounce delay-75"></div>
+                   <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full animate-bounce delay-150"></div>
                  </div>
                </div>
             )}
           </div>
 
           {/* Input Area */}
-          <div className="p-5 bg-[#F5F2EB] border-t border-[#D6D1C7]">
+          <div className="p-5 bg-background border-t border-border">
             <div className="flex gap-2 relative">
               <input 
                 type="text" 
@@ -110,12 +109,12 @@ const Assistant: React.FC = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder="Escribe tu pregunta..." 
-                className="flex-1 bg-white border border-[#D6D1C7] focus:border-[#2C2A26] px-4 py-3 text-sm outline-none transition-colors placeholder-[#A8A29E] text-[#2C2A26]"
+                className="flex-1 bg-card border border-border focus:border-primary px-4 py-3 text-sm outline-none transition-colors placeholder-muted-foreground text-foreground"
               />
               <button 
                 onClick={handleSend}
                 disabled={!inputValue.trim() || isThinking}
-                className="bg-[#2C2A26] text-[#F5F2EB] px-4 hover:bg-[#444] transition-colors disabled:opacity-50"
+                className="bg-primary text-primary-foreground px-4 hover:opacity-90 transition-colors disabled:opacity-50"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -128,7 +127,7 @@ const Assistant: React.FC = () => {
 
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-[#2C2A26] text-[#F5F2EB] w-14 h-14 flex items-center justify-center rounded-full shadow-xl hover:scale-105 transition-all duration-500 z-50"
+        className="bg-primary text-primary-foreground w-14 h-14 flex items-center justify-center rounded-full shadow-xl hover:scale-105 transition-all duration-500 z-50"
       >
         {isOpen ? (
              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-6 h-6">

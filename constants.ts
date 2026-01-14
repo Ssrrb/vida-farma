@@ -1,4 +1,3 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -107,16 +106,16 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
         excerpt: "Cómo proteger tu piel del intenso sol de la frontera y mantenerla hidratada.",
         image: "https://images.unsplash.com/photo-1532413992378-f169ac26fff0?auto=format&fit=crop&q=80&w=1000",
         content: React.createElement(React.Fragment, null,
-            React.createElement("p", { className: "mb-6 first-letter:text-5xl first-letter:font-serif first-letter:mr-3 first-letter:float-left text-[#5D5A53]" },
+            React.createElement("p", { className: "mb-6 first-letter:text-5xl first-letter:font-serif first-letter:mr-3 first-letter:float-left text-muted-foreground" },
                 "El sol en Pedro Juan Caballero no perdona. Con temperaturas que superan fácilmente los 35 grados, nuestra piel es la primera barrera que sufre las consecuencias. La radiación UV no solo causa quemaduras, sino que acelera el envejecimiento prematuro."
             ),
-            React.createElement("p", { className: "mb-8 text-[#5D5A53]" },
+            React.createElement("p", { className: "mb-8 text-muted-foreground" },
                 "La clave no es solo usar protector solar, sino reaplicarlo. Recomendamos un FPS 50+ de amplio espectro, reaplicado cada 2 horas si estás al aire libre. Además, la hidratación interna es fundamental: beber tereré ayuda, ¡pero no olvides el agua pura!"
             ),
-            React.createElement("blockquote", { className: "border-l-2 border-[#2C2A26] pl-6 italic text-xl text-[#2C2A26] my-10 font-serif" },
+            React.createElement("blockquote", { className: "border-l-2 border-primary pl-6 italic text-xl text-foreground my-10 font-serif" },
                 "\"Tu piel es tu mejor vestido, cuídala todos los días.\""
             ),
-            React.createElement("p", { className: "mb-6 text-[#5D5A53]" },
+            React.createElement("p", { className: "mb-6 text-muted-foreground" },
                 "En VidaFarma, contamos con la línea completa de dermocosmética para cada tipo de piel. Ven a visitarnos para un diagnóstico gratuito."
             )
         )
@@ -128,19 +127,19 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
         excerpt: "Entrevista con la Dra. Martínez sobre vitaminas y bienestar general.",
         image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&q=80&w=1000",
         content: React.createElement(React.Fragment, null,
-            React.createElement("p", { className: "mb-6 text-[#5D5A53]" },
+            React.createElement("p", { className: "mb-6 text-muted-foreground" },
                 "A veces, la dieta no es suficiente. Con el ritmo de vida acelerado que llevamos entre el trabajo y la familia, a menudo descuidamos nuestra nutrición básica."
             ),
-            React.createElement("p", { className: "mb-8 text-[#5D5A53]" },
+            React.createElement("p", { className: "mb-8 text-muted-foreground" },
                 "\"No se trata de reemplazar la comida real\", explica la Dra. Martínez, farmacéutica residente. \"Se trata de llenar los vacíos. La vitamina C, el Magnesio y el Zinc son esenciales para mantener nuestras defensas altas, especialmente durante los cambios de estación.\""
             ),
-            React.createElement("div", { className: "my-12 p-8 bg-[#EBE7DE] font-serif text-[#2C2A26] italic text-center" },
+            React.createElement("div", { className: "my-12 p-8 bg-muted font-serif text-foreground italic text-center" },
                 React.createElement("p", null, "Salud es equilibrio."),
                 React.createElement("p", null, "Cuerpo sano,"),
                 React.createElement("p", null, "Mente clara."),
                 React.createElement("p", null, "Vida plena.")
             ),
-            React.createElement("p", { className: "mb-6 text-[#5D5A53]" },
+            React.createElement("p", { className: "mb-6 text-muted-foreground" },
                 "Consulta siempre con un profesional antes de iniciar cualquier régimen de suplementación. En VidaFarma estamos para asesorarte."
             )
         )
@@ -152,13 +151,13 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
         excerpt: "Notas amaderadas y florales que dominarán esta temporada.",
         image: "https://images.unsplash.com/photo-1595535373192-fc04375b9672?auto=format&fit=crop&q=80&w=1000",
         content: React.createElement(React.Fragment, null,
-            React.createElement("p", { className: "mb-6 text-[#5D5A53]" },
+            React.createElement("p", { className: "mb-6 text-muted-foreground" },
                 "Este año, la perfumería vuelve a lo clásico pero con un giro moderno. Estamos viendo un resurgimiento de las notas de Oud y maderas profundas, suavizadas por toques florales ligeros como la peonía y el jazmín."
             ),
-            React.createElement("p", { className: "mb-8 text-[#5D5A53]" },
+            React.createElement("p", { className: "mb-8 text-muted-foreground" },
                 "Las fragancias 'Genderless' o unisex también están ganando terreno en el mercado paraguayo. Aromas limpios, cítricos y especiados que no distinguen género, solo personalidad."
             ),
-             React.createElement("div", { className: "my-12 p-8 bg-[#2C2A26] text-[#F5F2EB] font-serif italic text-center" },
+             React.createElement("div", { className: "my-12 p-8 bg-primary text-primary-foreground font-serif italic text-center" },
                 React.createElement("p", null, "El aroma es memoria."),
                 React.createElement("p", null, "Deja tu marca,"),
                 React.createElement("p", null, "Donde quiera que vayas.")
@@ -168,5 +167,5 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
 ];
 
 export const BRAND_NAME = 'VidaFarma';
-export const PRIMARY_COLOR = 'stone-900'; 
-export const ACCENT_COLOR = 'stone-500';
+export const PRIMARY_COLOR = 'primary'; 
+export const ACCENT_COLOR = 'secondary';

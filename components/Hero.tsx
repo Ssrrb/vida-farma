@@ -7,7 +7,7 @@ import DiscountModal, { Discount } from './DiscountModal';
 const DISCOUNTS: Discount[] = [
     {
         id: 'summer-sale',
-        title: '20% OFF',
+        title: '20% de Ahorro',
         subtitle: 'Oferta de Verano',
         description: 'Aprovecha un 20% de descuento en toda nuestra línea de dermocosmética y productos de bienestar seleccionados. Cuida tu piel este verano con la mejor calidad.',
         code: 'VIDA20',
@@ -38,7 +38,7 @@ const DISCOUNTS: Discount[] = [
     },
     {
         id: 'skincare-50',
-        title: '50% OFF',
+        title: '50% de Ahorro',
         subtitle: 'Cuidado de la Piel',
         description: '50% de descuento en la segunda unidad de la misma marca en productos de limpieza facial y serums.',
         category: 'Cuidado de la Piel',
@@ -47,7 +47,7 @@ const DISCOUNTS: Discount[] = [
     },
     {
         id: 'meds-days',
-        title: '15-25% OFF',
+        title: '15-25% de Ahorro',
         subtitle: 'Martes y Jueves',
         description: 'Días especiales de ahorro en medicamentos de venta libre y recetas seleccionadas todos los martes y jueves.',
         category: 'Medicamentos',
@@ -57,15 +57,15 @@ const DISCOUNTS: Discount[] = [
     {
         id: 'reintegros',
         title: 'Hasta 40%',
-        subtitle: 'Reintegros',
-        description: 'Obtén reintegros directos al comprar medicamentos para enfermedades crónicas a través de convenios con obras sociales.',
+        subtitle: 'en Reintegros',
+        description: 'Obtén reintegros directos al comprar medicamentos para enfermedades crónicas a través de Ueno Bank.',
         category: 'Salud',
         colorScheme: 'light',
         ctaText: 'Ver Convenios'
     },
     {
         id: 'supplements-50',
-        title: '50% OFF',
+        title: '50% de Ahorro',
         subtitle: 'Suplementos',
         description: '50% de descuento en la segunda unidad de suplementos deportivos y proteínas seleccionadas.',
         category: 'Suplementos',
@@ -92,7 +92,7 @@ const Hero: React.FC = () => {
         console.log('Action for:', discount.id);
         setIsModalOpen(false);
         // Navigate to store or relevant section
-        router.push('/#products'); 
+        router.push('/#products');
     };
 
     const mainBanner = DISCOUNTS[0];
@@ -100,14 +100,14 @@ const Hero: React.FC = () => {
     const bottomCards = DISCOUNTS.slice(3);
 
     return (
-        <section className="relative w-full min-h-screen bg-[#F5F2EB] pt-28 pb-16 px-4 md:px-8 font-sans">
+        <section className="relative w-full min-h-screen bg-background pt-28 pb-16 px-4 md:px-8 font-sans">
             <div className="max-w-[1600px] mx-auto space-y-6">
                 {/* Main Hero Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-[minmax(400px,auto)]">
 
                     {/* Large Main Banner */}
                     <div
-                        className="lg:col-span-2 bg-[#2C2A26] rounded-2xl p-8 md:p-14 relative overflow-hidden text-[#F5F2EB] flex flex-col justify-center min-h-[450px] cursor-pointer group shadow-xl transition-all duration-500 hover:shadow-2xl"
+                        className="lg:col-span-2 bg-primary rounded-2xl p-8 md:p-14 relative overflow-hidden text-primary-foreground flex flex-col justify-center min-h-[450px] cursor-pointer group shadow-xl transition-all duration-500 hover:shadow-2xl"
                         onClick={() => handleOpenModal(mainBanner)}
                     >
                         {/* Background Image with Overlay */}
@@ -117,21 +117,21 @@ const Hero: React.FC = () => {
                                 alt="Summer Sale"
                                 className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-1000"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#2C2A26] via-[#2C2A26]/80 to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent" />
                         </div>
 
                         <div className="relative z-10 max-w-xl">
-                            <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] mb-6 border-b border-[#D6D1C7]/30 pb-2">
+                            <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] mb-6 border-b border-white/30 pb-2">
                                 {mainBanner.subtitle}
                             </span>
                             <h2 className="text-6xl md:text-8xl font-serif mb-6 leading-none tracking-tight">
                                 {mainBanner.title}
                             </h2>
-                            <p className="text-lg md:text-xl font-light mb-10 text-[#A8A29E] leading-relaxed">
-                                En productos de dermocosmética y bienestar seleccionados con el código <span className="text-[#F5F2EB] font-medium border-b border-[#F5F2EB]">{mainBanner.code}</span>
+                            <p className="text-lg md:text-xl font-light mb-10 text-white/80 leading-relaxed">
+                                En productos de dermocosmética y bienestar seleccionados con el código <span className="text-white font-medium border-b border-white">{mainBanner.code}</span>
                             </p>
                             <button
-                                className="inline-block bg-[#F5F2EB] text-[#2C2A26] px-10 py-4 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg"
+                                className="inline-block bg-background text-foreground px-10 py-4 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     handleOpenModal(mainBanner);
@@ -151,20 +151,20 @@ const Hero: React.FC = () => {
                         {sideCards.map((discount) => (
                             <div
                                 key={discount.id}
-                                className="bg-white rounded-2xl p-8 flex-1 flex flex-col justify-center items-start relative overflow-hidden group hover:shadow-xl transition-all duration-500 cursor-pointer border border-[#EBE7DE]"
+                                className="bg-card rounded-2xl p-8 flex-1 flex flex-col justify-center items-start relative overflow-hidden group hover:shadow-xl transition-all duration-500 cursor-pointer border border-border"
                                 onClick={() => handleOpenModal(discount)}
                             >
                                 <div className="relative z-10 w-full flex justify-between items-start">
                                     <div className="max-w-[60%]">
-                                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#A8A29E] mb-2 block">{discount.category}</span>
-                                        <h3 className="text-3xl font-serif text-[#2C2A26] mb-2 leading-tight">{discount.subtitle}</h3>
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2 block">{discount.category}</span>
+                                        <h3 className="text-3xl font-serif text-foreground mb-2 leading-tight">{discount.subtitle}</h3>
                                         {discount.title !== discount.subtitle && (
-                                            <p className="text-4xl font-serif text-[#2C2A26] opacity-40">{discount.title}</p>
+                                            <p className="text-4xl font-serif text-foreground opacity-40">{discount.title}</p>
                                         )}
                                     </div>
 
                                     {discount.imageUrl && (
-                                        <div className="w-24 h-24 relative rounded-full overflow-hidden bg-[#F5F2EB] border border-[#EBE7DE]">
+                                        <div className="w-24 h-24 relative rounded-full overflow-hidden bg-muted border border-border">
                                             <img
                                                 src={discount.imageUrl}
                                                 alt={discount.category}
@@ -174,7 +174,7 @@ const Hero: React.FC = () => {
                                     )}
                                 </div>
 
-                                <div className="mt-6 z-10 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#2C2A26] group-hover:gap-4 transition-all">
+                                <div className="mt-6 z-10 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-foreground group-hover:gap-4 transition-all">
                                     <span>{discount.ctaText}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -182,7 +182,7 @@ const Hero: React.FC = () => {
                                 </div>
 
                                 {/* Background detail */}
-                                <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-[#EBE7DE] rounded-full opacity-20 group-hover:scale-150 transition-transform duration-1000"></div>
+                                <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-secondary rounded-full opacity-20 group-hover:scale-150 transition-transform duration-1000"></div>
                             </div>
                         ))}
                     </div>
@@ -193,21 +193,21 @@ const Hero: React.FC = () => {
                     {bottomCards.map((discount) => (
                         <div
                             key={discount.id}
-                            className="bg-white rounded-2xl p-8 flex flex-col justify-between min-h-[220px] hover:shadow-xl transition-all duration-500 cursor-pointer border border-[#EBE7DE] group"
+                            className="bg-card rounded-2xl p-8 flex flex-col justify-between min-h-[220px] hover:shadow-xl transition-all duration-500 cursor-pointer border border-border group"
                             onClick={() => handleOpenModal(discount)}
                         >
                             <div>
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-[#A8A29E] mb-3 block">{discount.category}</span>
-                                <h4 className="text-3xl font-serif text-[#2C2A26] leading-tight mb-2">{discount.title}</h4>
-                                <p className="text-sm text-[#5D5A53] opacity-0 group-hover:opacity-100 transition-opacity duration-300">{discount.subtitle}</p>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-3 block">{discount.category}</span>
+                                <h4 className="text-3xl font-serif text-foreground leading-tight mb-2">{discount.title}</h4>
+                                <p className="text-sm text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">{discount.subtitle}</p>
                             </div>
                             <div className="flex justify-between items-center mt-4">
-                                <div className="w-8 h-8 rounded-full bg-[#F5F2EB] flex items-center justify-center text-[#2C2A26] group-hover:bg-[#2C2A26] group-hover:text-[#F5F2EB] transition-colors duration-500">
+                                <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-secondary-foreground transition-colors duration-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                     </svg>
                                 </div>
-                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8A29E]">Detalles</span>
+                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Detalles</span>
                             </div>
                         </div>
                     ))}

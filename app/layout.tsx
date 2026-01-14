@@ -37,7 +37,7 @@ export default async function RootLayout({
 
   return (
     <html lang="es">
-      <body className="font-sans bg-[#F5F2EB] text-[#2C2A26] selection:bg-[#D6D1C7] selection:text-[#2C2A26]">
+      <body className="font-sans bg-background text-foreground selection:bg-primary/20 selection:text-foreground">
         <Providers>
           <Navbar categories={categories} />
           <main className="min-h-screen pt-[80px]">
