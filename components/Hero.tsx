@@ -1,11 +1,7 @@
-
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
-
+'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import DiscountModal, { Discount } from './DiscountModal';
 
 const DISCOUNTS: Discount[] = [
@@ -81,6 +77,7 @@ const DISCOUNTS: Discount[] = [
 const Hero: React.FC = () => {
     const [selectedDiscount, setSelectedDiscount] = useState<Discount | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const router = useRouter();
 
     const handleOpenModal = (discount: Discount) => {
         setSelectedDiscount(discount);
@@ -94,14 +91,8 @@ const Hero: React.FC = () => {
     const handleAction = (discount: Discount) => {
         console.log('Action for:', discount.id);
         setIsModalOpen(false);
-        // Smooth scroll to products as a default action
-        const element = document.getElementById('products');
-        if (element) {
-            const headerOffset = 85;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.scrollY - headerOffset;
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        }
+        // Navigate to store or relevant section
+        router.push('/#products'); 
     };
 
     const mainBanner = DISCOUNTS[0];

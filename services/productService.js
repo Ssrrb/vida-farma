@@ -32,3 +32,27 @@ export const fetchProducts = async () => {
 
   return result.rows.map(mapProductRow);
 };
+
+export const fetchProductById = async (id) => {
+  const result = await pool.query(`
+    SELECT
+      id,
+      name,
+      tagline,
+      description,
+      long_description,
+      price,
+      category,
+      image_url,
+      gallery,
+      features
+    FROM products
+    WHERE id = $1;
+  `, [id]);
+
+  if (result.rows.length === 0) {
+    return null;
+  }
+
+  return mapProductRow(result.rows[0]);
+};

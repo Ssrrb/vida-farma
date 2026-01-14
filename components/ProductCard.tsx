@@ -1,20 +1,15 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
-
-
+'use client';
 import React from 'react';
+import Link from 'next/link';
 import { Product } from '../types';
 
 interface ProductCardProps {
   product: Product;
-  onClick: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <div className="group flex flex-col gap-6 cursor-pointer" onClick={() => onClick(product)}>
+    <Link href={`/product/${product.id}`} className="group flex flex-col gap-6 cursor-pointer">
       <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#EBE7DE]">
         <img 
           src={product.imageUrl} 
@@ -35,9 +30,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
       <div className="text-center">
         <h3 className="text-2xl font-serif font-medium text-[#2C2A26] mb-1 group-hover:opacity-70 transition-opacity">{product.name}</h3>
         <p className="text-sm font-light text-[#5D5A53] mb-3 tracking-wide">{product.category}</p>
-        <span className="text-sm font-medium text-[#2C2A26] block">${product.price}</span>
+        <span className="text-sm font-medium text-[#2C2A26] block">Gs. {product.price.toLocaleString('es-PY')}</span>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -1,1 +1,0 @@
-refactor the checkout to use a whatsapp based payment system where users load everything in their cart and then click a button to open whatsapp with a message saying "Hola estoy interesado en comprar los siguientes productos: " and then list the products in the cart with their quantity and price.

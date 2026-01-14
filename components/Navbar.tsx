@@ -1,27 +1,23 @@
-
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
-
-
+'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useCart } from '@/context/CartContext';
 
 interface NavbarProps {
-  onNavClick: (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => void;
-  onSearch: (query: string) => void;
-  onCategorySelect: (category: string) => void;
-  cartCount: number;
-  onOpenCart: () => void;
   categories: string[];
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onNavClick, onSearch, onCategorySelect, cartCount, onOpenCart, categories }) => {
+const Navbar: React.FC<NavbarProps> = ({ categories }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const categoryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const { cartItems, setIsCartOpen } = useCart();
+  const router = useRouter();
+  const cartCount = cartItems.length;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,13 +30,13 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, onSearch, onCategorySelect,
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-        onSearch(searchQuery);
+        router.push(`/store?search=${encodeURIComponent(searchQuery)}`);
         setMobileMenuOpen(false);
     }
   };
 
   const handleCategoryClick = (category: string) => {
-    onCategorySelect(category);
+    router.push(`/store?category=${encodeURIComponent(category)}`);
     setShowCategories(false);
     setMobileMenuOpen(false);
   };
@@ -61,13 +57,8 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, onSearch, onCategorySelect,
         <div className="max-w-[1800px] mx-auto px-4 md:px-8 flex items-center justify-between gap-8">
           
           {/* Logo */}
-          <a 
-            href="#" 
-            onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                onNavClick(e, '');
-            }}
+          <Link 
+            href="/" 
             className={`text-2xl md:text-3xl font-serif font-medium tracking-tight z-50 whitespace-nowrap transition-colors duration-500 ${textClass}`}
           >
             <img
@@ -76,7 +67,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, onSearch, onCategorySelect,
               className="h-14 md:h-20 lg:h-24 w-auto -my-2"
               style={{ filter: isSolid ? 'none' : 'invert(1)' }}
             />
-          </a>
+          </Link>
           
           {/* Desktop Search & Nav */}
           <div className="hidden md:flex flex-1 items-center gap-6 justify-center max-w-4xl mx-auto">
@@ -139,7 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavClick, onSearch, onCategorySelect,
           {/* Right Actions */}
           <div className={`flex items-center gap-6 z-50 relative transition-colors duration-500 ${textClass}`}>
             <button 
-              onClick={onOpenCart}
+              onClick={() => setIsCartOpen(true)}
               className="relative hover:opacity-60 transition-opacity"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

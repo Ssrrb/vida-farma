@@ -1,43 +1,40 @@
-
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
+'use client';
 
 import React from 'react';
-import { Product } from '../types';
+import { useCart } from '@/context/CartContext';
+import { useRouter } from 'next/navigation';
 
-interface CartDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
-  items: Product[];
-  onRemoveItem: (index: number) => void;
-  onCheckout: () => void;
-}
+const CartDrawer: React.FC = () => {
+  const { isCartOpen, setIsCartOpen, cartItems, removeFromCart } = useCart();
+  const router = useRouter();
+  
+  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
 
-const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, items, onRemoveItem, onCheckout }) => {
-  const total = items.reduce((sum, item) => sum + item.price, 0);
+  const handleCheckout = () => {
+      setIsCartOpen(false);
+      router.push('/checkout');
+  };
 
   return (
     <>
       {/* Backdrop */}
       <div 
         className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] transition-opacity duration-500 ${
-          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          isCartOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
-        onClick={onClose}
+        onClick={() => setIsCartOpen(false)}
       />
 
       {/* Drawer */}
       <div 
         className={`fixed top-0 right-0 h-full w-full sm:w-[450px] bg-[#F5F2EB] z-[70] shadow-2xl transform transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) flex flex-col ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+          isCartOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-[#D6D1C7]">
           <h2 className="text-xl font-serif text-[#2C2A26]">Carrito de Compras</h2>
-          <button onClick={onClose} className="text-[#A8A29E] hover:text-[#2C2A26] transition-colors">
+          <button onClick={() => setIsCartOpen(false)} className="text-[#A8A29E] hover:text-[#2C2A26] transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -46,13 +43,13 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, items, onRemov
 
         {/* Items */}
         <div className="flex-1 overflow-y-auto p-6 space-y-8">
-          {items.length === 0 ? (
+          {cartItems.length === 0 ? (
             <div className="h-full flex flex-col justify-center items-center text-[#A8A29E]">
               <span className="mb-4 text-4xl">🧴</span>
               <p>Tu carrito está vacío.</p>
             </div>
           ) : (
-            items.map((item, idx) => (
+            cartItems.map((item, idx) => (
               <div key={idx} className="flex gap-4 animate-fade-in-up">
                 <div className="w-20 h-20 bg-[#EBE7DE] overflow-hidden">
                   <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
@@ -65,7 +62,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, items, onRemov
                    <div className="flex justify-between items-end">
                      <span className="text-sm text-[#5D5A53]">Gs. {item.price.toLocaleString('es-PY')}</span>
                      <button 
-                       onClick={() => onRemoveItem(idx)}
+                       onClick={() => removeFromCart(idx)}
                        className="text-xs uppercase tracking-widest text-[#A8A29E] hover:text-red-800 transition-colors"
                      >
                        Eliminar
@@ -84,8 +81,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose, items, onRemov
             <span className="text-xl font-serif text-[#2C2A26]">Gs. {total.toLocaleString('es-PY')}</span>
           </div>
           <button 
-            onClick={onCheckout}
-            disabled={items.length === 0}
+            onClick={handleCheckout}
+            disabled={cartItems.length === 0}
             className="w-full py-4 bg-[#2C2A26] text-[#F5F2EB] uppercase tracking-widest text-sm font-medium hover:bg-[#433E38] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Finalizar Compra

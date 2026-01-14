@@ -1,25 +1,17 @@
+'use client';
 
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
-
-
-import React, { useState } from 'react';
+import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Product } from '../types';
+import { useCart } from '@/context/CartContext';
 
 interface ProductDetailProps {
   product: Product;
-  onBack: () => void;
-  onAddToCart: (product: Product) => void;
 }
 
-const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack, onAddToCart }) => {
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
-
-  // Mock sizes for demonstration if needed, though mostly relevant for "Cosmética" or "Perfumería" variants
-  const sizes = ['30ml', '50ml', '100ml'];
-  const showSizes = product.category === 'Perfumes' || product.category === 'Dermocosmetica';
+const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
+  const router = useRouter();
+  const { addToCart } = useCart();
 
   const handleWhatsAppClick = () => {
     // Replace with the actual pharmacy phone number in international format (e.g., 5959...)
@@ -34,13 +26,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack, onAddToC
 
         {/* Breadcrumb / Back */}
         <button
-          onClick={onBack}
+          onClick={() => router.back()}
           className="group flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-[#A8A29E] hover:text-[#2C2A26] transition-colors mb-8"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:-translate-x-1 transition-transform">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
-          Volver al Catálogo
+          Volver
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
@@ -69,7 +61,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onBack, onAddToC
             <div className="flex flex-col gap-4">
               {/* Add to Cart Button */}
               <button
-                onClick={() => onAddToCart(product)}
+                onClick={() => addToCart(product)}
                 className="w-full py-5 bg-[#2C2A26] text-[#F5F2EB] uppercase tracking-widest text-sm font-medium hover:bg-[#433E38] transition-colors shadow-lg hover:shadow-xl"
               >
                 Agregar al Carrito

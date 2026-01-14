@@ -1,17 +1,9 @@
-
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
-
+'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 
-interface FooterProps {
-  onLinkClick: (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => void;
-}
-
-const Footer: React.FC<FooterProps> = ({ onLinkClick }) => {
+const Footer: React.FC = () => {
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success'>('idle');
   const [email, setEmail] = useState('');
 
@@ -39,19 +31,19 @@ const Footer: React.FC<FooterProps> = ({ onLinkClick }) => {
         <div className="md:col-span-2">
           <h4 className="font-medium text-[#2C2A26] mb-6 tracking-wide text-sm uppercase">Tienda</h4>
           <ul className="space-y-4 font-light">
-            <li><a href="#products" onClick={(e) => onLinkClick(e, 'products')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Ver Todo</a></li>
-            <li><a href="#products" onClick={(e) => onLinkClick(e, 'products')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Novedades</a></li>
-            <li><a href="#products" onClick={(e) => onLinkClick(e, 'products')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Perfumería</a></li>
-            <li><a href="#products" onClick={(e) => onLinkClick(e, 'products')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Farmacia</a></li>
+            <li><Link href="/store" className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Ver Todo</Link></li>
+            <li><Link href="/store" className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Novedades</Link></li>
+            <li><Link href="/store" className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Perfumería</Link></li>
+            <li><Link href="/store" className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Farmacia</Link></li>
           </ul>
         </div>
         
         <div className="md:col-span-2">
           <h4 className="font-medium text-[#2C2A26] mb-6 tracking-wide text-sm uppercase">Empresa</h4>
           <ul className="space-y-4 font-light">
-            <li><a href="#about" onClick={(e) => onLinkClick(e, 'about')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Nosotros</a></li>
-            <li><a href="#about" onClick={(e) => onLinkClick(e, 'about')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Ubicación</a></li>
-            <li><a href="#journal" onClick={(e) => onLinkClick(e, 'journal')} className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Blog de Salud</a></li>
+            <li><Link href="/#about" className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Nosotros</Link></li>
+            <li><Link href="/#about" className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Ubicación</Link></li>
+            <li><Link href="/#journal" className="hover:text-[#2C2A26] transition-colors underline-offset-4 hover:underline">Blog de Salud</Link></li>
           </ul>
         </div>
 

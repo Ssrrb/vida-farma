@@ -1,21 +1,15 @@
-
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
-
+'use client';
 
 import React, { useState, useMemo } from 'react';
 import { Product } from '../types';
 import ProductCard from './ProductCard';
 
 interface ProductGridProps {
-  onProductClick: (product: Product) => void;
   products: Product[];
   categories: string[];
 }
 
-const ProductGrid: React.FC<ProductGridProps> = ({ onProductClick, products, categories }) => {
+const ProductGrid: React.FC<ProductGridProps> = ({ products, categories }) => {
   const [activeCategory, setActiveCategory] = useState('Todo');
 
   const filteredProducts = useMemo(() => {
@@ -52,7 +46,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ onProductClick, products, cat
         {/* Large Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
           {filteredProducts.map(product => (
-            <ProductCard key={product.id} product={product} onClick={onProductClick} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>

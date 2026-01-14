@@ -1,18 +1,16 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
-
+'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { JournalArticle } from '../types';
 
 interface JournalDetailProps {
   article: JournalArticle;
-  onBack: () => void;
 }
 
-const JournalDetail: React.FC<JournalDetailProps> = ({ article, onBack }) => {
+const JournalDetail: React.FC<JournalDetailProps> = ({ article }) => {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-[#F5F2EB] animate-fade-in-up">
        {/* Hero Image for Article - Full bleed to top so navbar sits on it */}
@@ -29,13 +27,13 @@ const JournalDetail: React.FC<JournalDetailProps> = ({ article, onBack }) => {
           <div className="bg-[#F5F2EB] p-8 md:p-16 shadow-xl shadow-[#2C2A26]/5">
              <div className="flex justify-between items-center mb-12 border-b border-[#D6D1C7] pb-8">
                 <button 
-                  onClick={onBack}
+                  onClick={() => router.back()}
                   className="group flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-[#A8A29E] hover:text-[#2C2A26] transition-colors"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:-translate-x-1 transition-transform">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                   </svg>
-                  Back to Journal
+                  Volver al Blog
                 </button>
                 <span className="text-xs font-medium uppercase tracking-widest text-[#A8A29E]">{article.date}</span>
              </div>

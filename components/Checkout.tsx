@@ -1,19 +1,12 @@
-
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
-
+'use client';
 
 import React from 'react';
-import { Product } from '../types';
+import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
+import { Product } from '@/types';
 
-interface CheckoutProps {
-  items: Product[];
-  onBack: () => void;
-}
-
-const Checkout: React.FC<CheckoutProps> = ({ items, onBack }) => {
+const Checkout: React.FC = () => {
+  const { cartItems: items } = useCart();
   const subtotal = items.reduce((sum, item) => sum + item.price, 0);
   const shipping = 0; // Envío gratis
   const total = subtotal + shipping;
@@ -44,15 +37,15 @@ const Checkout: React.FC<CheckoutProps> = ({ items, onBack }) => {
   return (
     <div className="min-h-screen pt-24 pb-24 px-6 bg-[#F5F2EB] animate-fade-in-up">
       <div className="max-w-6xl mx-auto">
-        <button
-          onClick={onBack}
+        <Link
+          href="/store"
           className="group flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-[#A8A29E] hover:text-[#2C2A26] transition-colors mb-12"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 group-hover:-translate-x-1 transition-transform">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
           Volver a la Tienda
-        </button>
+        </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
 

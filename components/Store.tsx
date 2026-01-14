@@ -1,33 +1,28 @@
+'use client';
 
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
-
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Product } from '../types';
 import ProductCard from './ProductCard';
 
 interface StoreProps {
-  initialCategory?: string;
-  initialSearch?: string;
-  onProductClick: (product: Product) => void;
   products: Product[];
   categories: string[];
 }
 
-const Store: React.FC<StoreProps> = ({ initialCategory, initialSearch, onProductClick, products, categories }) => {
-  const [activeCategory, setActiveCategory] = useState(initialCategory || 'Todo');
-  const [searchQuery, setSearchQuery] = useState(initialSearch || '');
+const Store: React.FC<StoreProps> = ({ products, categories }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  const activeCategory = searchParams.get('category') || 'Todo';
+  const searchQuery = searchParams.get('search') || '';
 
-  // Update state if props change (navigating from navbar)
-  useEffect(() => {
-    if (initialCategory) setActiveCategory(initialCategory);
-  }, [initialCategory]);
-
-  useEffect(() => {
-    if (initialSearch !== undefined) setSearchQuery(initialSearch);
-  }, [initialSearch]);
+  const updateParams = (category: string, search: string) => {
+    const params = new URLSearchParams();
+    if (category && category !== 'Todo') params.set('category', category);
+    if (search) params.set('search', search);
+    router.push(`/store?${params.toString()}`);
+  };
 
   const filteredProducts = useMemo(() => {
     return products.filter(p => {
@@ -58,10 +53,7 @@ const Store: React.FC<StoreProps> = ({ initialCategory, initialSearch, onProduct
                 {categories.map(cat => (
                     <button
                         key={cat}
-                        onClick={() => {
-                            setActiveCategory(cat);
-                            setSearchQuery(''); // Clear search when picking a category manually
-                        }}
+                        onClick={() => updateParams(cat, '')}
                         className={`px-4 py-2 rounded-full text-xs font-medium uppercase tracking-wider transition-all border ${
                             activeCategory === cat 
                                 ? 'bg-[#2C2A26] text-white border-[#2C2A26]' 
@@ -78,7 +70,7 @@ const Store: React.FC<StoreProps> = ({ initialCategory, initialSearch, onProduct
         {filteredProducts.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
             {filteredProducts.map(product => (
-                <ProductCard key={product.id} product={product} onClick={onProductClick} />
+                <ProductCard key={product.id} product={product} />
             ))}
             </div>
         ) : (
@@ -89,7 +81,7 @@ const Store: React.FC<StoreProps> = ({ initialCategory, initialSearch, onProduct
                 <p className="text-xl font-serif">No encontramos productos.</p>
                 <p className="text-sm mt-2">Intenta con otra categoría o término de búsqueda.</p>
                 <button 
-                    onClick={() => { setActiveCategory('Todo'); setSearchQuery(''); }}
+                    onClick={() => updateParams('Todo', '')}
                     className="mt-6 text-[#2C2A26] underline underline-offset-4"
                 >
                     Ver todo el catálogo

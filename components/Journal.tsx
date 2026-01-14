@@ -1,18 +1,10 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
-*/
-
+'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { JOURNAL_ARTICLES } from '../constants';
-import { JournalArticle } from '../types';
 
-interface JournalProps {
-  onArticleClick: (article: JournalArticle) => void;
-}
-
-const Journal: React.FC<JournalProps> = ({ onArticleClick }) => {
+const Journal: React.FC = () => {
   return (
     <section id="journal" className="bg-[#F5F2EB] py-32 px-6 md:px-12">
       <div className="max-w-[1800px] mx-auto">
@@ -25,7 +17,7 @@ const Journal: React.FC<JournalProps> = ({ onArticleClick }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {JOURNAL_ARTICLES.map((article) => (
-                <div key={article.id} className="group cursor-pointer flex flex-col text-left" onClick={() => onArticleClick(article)}>
+                <Link href={`/journal/${article.id}`} key={article.id} className="group cursor-pointer flex flex-col text-left">
                     <div className="w-full aspect-[4/3] overflow-hidden mb-8 bg-[#EBE7DE]">
                         <img 
                             src={article.image} 
@@ -38,7 +30,7 @@ const Journal: React.FC<JournalProps> = ({ onArticleClick }) => {
                         <h3 className="text-2xl font-serif text-[#2C2A26] mb-4 leading-tight group-hover:underline decoration-1 underline-offset-4">{article.title}</h3>
                         <p className="text-[#5D5A53] font-light leading-relaxed">{article.excerpt}</p>
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
       </div>
