@@ -37,7 +37,9 @@ Database configuration.
 
 ## Data Models
 (Inferred from `db/database.sql` and `types.ts`)
+*   **Brand:** Name, sort order.
 *   **Product:** ID, name, price, description, category, images, features.
+    *   Brand name, discount percent, discount window (start/end).
 *   **Category:** Name, sort order, subcategories.
 
 ## Setup & Running

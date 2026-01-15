@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import DiscountModal, { Discount } from './DiscountModal';
+import AdSwitcher from './AdSwitcher';
 
 const DISCOUNTS: Discount[] = [
     {
@@ -56,8 +57,8 @@ const DISCOUNTS: Discount[] = [
     },
     {
         id: 'reintegros',
-        title: 'Hasta 40%',
-        subtitle: 'en Reintegros',
+        title: 'Reintegro 40%',
+        subtitle: 'Hasta 40% de Ahorro',
         description: 'Obtén reintegros directos al comprar medicamentos para enfermedades crónicas a través de Ueno Bank.',
         category: 'Salud',
         colorScheme: 'light',
@@ -71,6 +72,24 @@ const DISCOUNTS: Discount[] = [
         category: 'Suplementos',
         colorScheme: 'light',
         ctaText: 'Comprar Ahora'
+    }
+];
+
+const HERO_SLIDES: Discount[] = [
+    {
+        ...DISCOUNTS[0],
+        imageUrl: '/central-ad.png',
+        category: 'Dermocosmetica' // Target category
+    },
+    {
+        id: 'special-offer-2',
+        title: 'Oferta Especial',
+        subtitle: 'Oferta Especial',
+        description: '',
+        colorScheme: 'dark',
+        ctaText: '',
+        imageUrl: '/central-ad2.png',
+        category: 'Perfumes' // Target category
     }
 ];
 
@@ -95,7 +114,15 @@ const Hero: React.FC = () => {
         router.push('/#products');
     };
 
-    const mainBanner = DISCOUNTS[0];
+    const handleAdClick = (discount: Discount) => {
+        if (discount.category) {
+            router.push(`/?category=${encodeURIComponent(discount.category)}#products`);
+        } else {
+            router.push('/#products');
+        }
+    };
+
+    // const mainBanner = DISCOUNTS[0]; // Replaced by HERO_SLIDES
     const sideCards = DISCOUNTS.slice(1, 3);
     const bottomCards = DISCOUNTS.slice(3);
 
@@ -105,46 +132,11 @@ const Hero: React.FC = () => {
                 {/* Main Hero Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-[minmax(400px,auto)]">
 
-                    {/* Large Main Banner */}
-                    <div
-                        className="lg:col-span-2 bg-primary rounded-2xl p-8 md:p-14 relative overflow-hidden text-primary-foreground flex flex-col justify-center min-h-[450px] cursor-pointer group shadow-xl transition-all duration-500 hover:shadow-2xl"
-                        onClick={() => handleOpenModal(mainBanner)}
-                    >
-                        {/* Background Image with Overlay */}
-                        <div className="absolute inset-0 z-0">
-                            <img
-                                src={mainBanner.imageUrl}
-                                alt="Summer Sale"
-                                className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-1000"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent" />
-                        </div>
-
-                        <div className="relative z-10 max-w-xl">
-                            <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] mb-6 border-b border-white/30 pb-2">
-                                {mainBanner.subtitle}
-                            </span>
-                            <h2 className="text-6xl md:text-8xl font-serif mb-6 leading-none tracking-tight">
-                                {mainBanner.title}
-                            </h2>
-                            <p className="text-lg md:text-xl font-light mb-10 text-white/80 leading-relaxed">
-                                En productos de dermocosmética y bienestar seleccionados con el código <span className="text-white font-medium border-b border-white">{mainBanner.code}</span>
-                            </p>
-                            <button
-                                className="inline-block bg-background text-foreground px-10 py-4 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleOpenModal(mainBanner);
-                                }}
-                            >
-                                {mainBanner.ctaText}
-                            </button>
-                        </div>
-                        {/* Decorative background typography */}
-                        <div className="absolute right-0 bottom-0 text-[15rem] md:text-[20rem] font-bold text-white/5 leading-none pointer-events-none select-none -mb-20 -mr-10 font-serif">
-                            2025
-                        </div>
-                    </div>
+                    {/* Large Main Banner with Ad Switcher */}
+                    <AdSwitcher
+                        slides={HERO_SLIDES}
+                        onOpenModal={handleAdClick}
+                    />
 
                     {/* Right Column Stacked Cards */}
                     <div className="flex flex-col gap-6">

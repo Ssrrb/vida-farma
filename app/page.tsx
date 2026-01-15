@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero';
+import Benefits from '@/components/Benefits';
 import ProductGrid from '@/components/ProductGrid';
 import About from '@/components/About';
 import Journal from '@/components/Journal';
@@ -19,6 +20,7 @@ export default async function Home() {
   return (
     <>
       <Hero />
+      <Benefits />
       <ProductGrid products={products} categories={categoryNames} />
       <About />
       <Journal />

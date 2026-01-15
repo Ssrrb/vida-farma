@@ -27,6 +27,10 @@ export interface Product {
   description: string;
   longDescription?: string;
   price: number;
+  brandName?: string;
+  discountPercent?: number;
+  discountStartsAt?: string;
+  discountEndsAt?: string;
   category: Category;
   imageUrl: string;
   gallery?: string[];

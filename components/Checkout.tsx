@@ -28,7 +28,7 @@ const Checkout: React.FC = () => {
 
     const message = `Hola estoy interesado en comprar los siguientes productos:\n\n${itemsList}\n\n*Total: Gs. ${total.toLocaleString('es-PY')}*`;
     const encodedMessage = encodeURIComponent(message);
-    const phoneNumber = '595981123456';
+    const phoneNumber = '595984427741';
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
     window.open(whatsappUrl, '_blank');
